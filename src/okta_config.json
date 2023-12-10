@@ -1,0 +1,5 @@
+{
+    "clientId": "0oa8hpkdjetm8Yvqh697",
+    "issuer": "https://trial-5003612.okta.com/oauth2/default",
+    "redirectUri": "http://localhost:3000/" 
+  }
