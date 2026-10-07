@@ -1,11 +1,11 @@
 {
   "name": "permission-manager-server",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node -e \"const app = require('./server.js'); console.log('Server module loaded successfully'); process.exit(0);\""
+    "test": "node test/authIntegration.test.js"
   },
   "dependencies": {
     "express": "^4.19.2",

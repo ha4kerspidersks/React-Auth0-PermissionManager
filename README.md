@@ -84,16 +84,27 @@ Create or update `src/auth_config.json`:
 npm run dev
 ```
 
-### 5. Running the Test Suite
+### 5. Running the Test Suites
 
 ```bash
+# Frontend Vitest test suite (9 test cases)
 npm test
+
+# Backend RS256 token validation integration test suite (14 test cases)
+npm run test:server
+
+# Run all test suites
+npm run test:all
 ```
 
-### 6. Production Build
+### 6. Production Build & Server
 
 ```bash
+# Compile optimized Vite SPA bundle into dist/
 npm run build
+
+# Start production Express API server & SPA host
+npm run server
 ```
 
 ---
@@ -126,11 +137,22 @@ export default function Dashboard() {
 
 ---
 
-## 🔒 Security Best Practices
+## 🔒 Backend Security & Token Validation Model
 
-1. **Authorization Code Flow with PKCE:** Replaces legacy implicit flows, eliminating token exposure in browser history and query strings.
-2. **Short-Lived Access Tokens:** Leverages ephemeral JWT access tokens combined with Refresh Token Rotation (RTR).
-3. **Defense in Depth:** Client-side route guards are paired with downstream API token validation (verifying RS256 signatures, audience, and issuer).
+The Express server (`server/server.js`) enforces defense-in-depth API protection via `server/middleware/jwtAuth.js`:
+- **Cryptographic Verification**: Enforces `RS256` asymmetric signatures using Auth0 public keys.
+- **Claim Enforcement**: Validates expected `issuer`, `audience`, and expiration timestamps (`exp`, `nbf`).
+- **Granular Scope Authorization**: Route-level middleware `requireScope()` verifies required OAuth scopes (`read:spark`, `update:spark`, `manage:all`).
+- **Zero Mock Testing**: Comprehensive integration tests validate both acceptance and rejection conditions against ephemeral test keypairs with zero reliance on production credentials.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please review:
+- [Contributing Guide](.github/CONTRIBUTING.md)
+- [Code of Conduct](.github/CODE_OF_CONDUCT.md)
+- [Changelog](CHANGELOG.md)
 
 ---
 

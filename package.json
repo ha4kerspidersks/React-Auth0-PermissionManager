@@ -1,6 +1,6 @@
 {
   "name": "mydemoapplication",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@auth0/auth0-react": "^2.2.1",
@@ -26,6 +26,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:server": "npm --prefix server test",
+    "test:all": "npm test && npm run test:server",
     "server": "node server/server.js"
   },
   "eslintConfig": {

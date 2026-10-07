@@ -1,0 +1,39 @@
+name: Bug Report
+description: Create a report to help us improve React-Auth0-PermissionManager
+title: "[BUG]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+      placeholder: Describe the issue in detail...
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this behavior?
+      placeholder: |
+        1. Start application with 'npm run dev'
+        2. Initiate Auth0 login with...
+        3. See error...
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment Info
+      description: Node version, OS, browser, etc.
+      value: |
+        - Node: 20.x
+        - OS: macOS / Linux / Windows
+        - Browser: Chrome / Firefox / Safari
+    validations:
+      required: true
