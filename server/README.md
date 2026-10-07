@@ -36,7 +36,22 @@ By default, the server listens on port `8080` (or `process.env.PORT`).
 - `AUTH0_AUDIENCE`: Target API audience identifier.
 - `AUTH0_REDIRECT_URI`: Post-login callback URL.
 
-## Endpoints
-- `GET /health`: Server health check status.
-- `GET /api1`: Sample backend endpoint.
-- `GET *`: Static fallback serving the compiled React client SPA (`../dist/index.html`).
+## API Endpoints & Security Matrix
+
+| Endpoint | Method | Authentication Requirement | Required Scope | Success Status | Unauthorized Status | Forbidden Status | Policy Description |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---|
+| `/health` | `GET` | None (Public) | None | `200 OK` | N/A | N/A | Liveness probe & health status |
+| `/api1` | `GET` | None (Public) | None | `200 OK` | N/A | N/A | Legacy demonstration endpoint |
+| `/api/protected` | `GET` | RS256 Bearer JWT | None | `200 OK` | `401 Unauthorized` | N/A | General authenticated identity endpoint |
+| `/api/spark/read` | `GET` | RS256 Bearer JWT | `read:spark` | `200 OK` | `401 Unauthorized` | `403 Forbidden` | Read access to spark cluster resources |
+| `/api/spark/update` | `POST` | RS256 Bearer JWT | `update:spark` | `200 OK` | `401 Unauthorized` | `403 Forbidden` | Update spark cluster configurations |
+| `/api/spark/admin` | `DELETE` | RS256 Bearer JWT | `manage:all` | `200 OK` | `401 Unauthorized` | `403 Forbidden` | Administrative cluster management |
+| `/*` | `GET` | None (Public) | None | `200 OK` | N/A | N/A | Static fallback serving Vite React SPA |
+
+## Running Security Integration Tests
+
+```bash
+npm test
+```
+Executes 37 automated HTTP integration tests verifying algorithm protection (none/symmetric rejection), signature cryptography, claim lifecycle, and role authorization.
+

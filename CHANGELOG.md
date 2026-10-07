@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-10-07
+
+### Added
+- **JWT Algorithm Attack Protection**: Explicit rejection of `alg=none`, case-insensitive variants (`alg=None`), and symmetric key confusion attacks (`HS256` against `RS256`).
+- **Key Identifier (kid) Resolution**: Support for dynamic keystore key resolution with strict fail-closed behavior on missing or unknown keys.
+- **Claims Lifecycle Verification**: Strict enforcement of Not-Before (`nbf`), non-numeric `exp`, and non-numeric `nbf` claims.
+- **Expanded Security Test Suite**: Added 23 new HTTP integration test scenarios (bringing the backend test suite to 37 automated test cases, 46 tests overall).
+- **API Security & Authorization Matrix**: Documented full endpoint security matrix with explicit authentication requirements and RBAC scopes.
+
 ---
 
 ## [1.0.0] - 2026-10-07

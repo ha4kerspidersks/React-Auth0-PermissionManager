@@ -141,9 +141,24 @@ export default function Dashboard() {
 
 The Express server (`server/server.js`) enforces defense-in-depth API protection via `server/middleware/jwtAuth.js`:
 - **Cryptographic Verification**: Enforces `RS256` asymmetric signatures using Auth0 public keys.
+- **Algorithm Attack Prevention**: Explicitly rejects `none`, casing variants (`None`), and symmetric key confusion attacks (`HS256`).
 - **Claim Enforcement**: Validates expected `issuer`, `audience`, and expiration timestamps (`exp`, `nbf`).
+- **Key ID (kid) Verification**: Supports dynamic keystore key resolution and fails closed on unknown or missing key identifiers.
 - **Granular Scope Authorization**: Route-level middleware `requireScope()` verifies required OAuth scopes (`read:spark`, `update:spark`, `manage:all`).
-- **Zero Mock Testing**: Comprehensive integration tests validate both acceptance and rejection conditions against ephemeral test keypairs with zero reliance on production credentials.
+- **Zero Mock Testing**: 37 automated HTTP integration tests validate both acceptance and rejection conditions against ephemeral test keypairs with zero reliance on production credentials.
+
+### API Security & Authorization Matrix
+
+| Endpoint | Method | AuthN Requirement | Required Scope | Success | Unauthorized | Forbidden | Purpose |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---|
+| `/health` | `GET` | None (Public) | None | `200` | N/A | N/A | Health & Liveness probe |
+| `/api1` | `GET` | None (Public) | None | `200` | N/A | N/A | Legacy demonstration endpoint |
+| `/api/protected` | `GET` | RS256 Bearer JWT | None | `200` | `401` | N/A | Authenticated identity context |
+| `/api/spark/read` | `GET` | RS256 Bearer JWT | `read:spark` | `200` | `401` | `403` | Read access to spark clusters |
+| `/api/spark/update` | `POST` | RS256 Bearer JWT | `update:spark` | `200` | `401` | `403` | Update spark cluster settings |
+| `/api/spark/admin` | `DELETE` | RS256 Bearer JWT | `manage:all` | `200` | `401` | `403` | Administrative operations |
+| `/*` | `GET` | None (Public) | None | `200` | N/A | N/A | Static Vite SPA client fallback |
+
 
 ---
 

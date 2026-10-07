@@ -58,7 +58,10 @@ function createServer(options = {}) {
   const jwtVerifier = createJwtVerifier({
     publicKey: options.publicKey || process.env.AUTH0_PUBLIC_KEY,
     issuer: issuer,
-    audience: audience
+    audience: audience,
+    algorithms: options.algorithms || ['RS256'],
+    requireExp: options.requireExp !== false,
+    requireKid: options.requireKid || false
   });
 
   // Protected API Endpoints
