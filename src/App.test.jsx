@@ -1,8 +1,19 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+jest.mock('@auth0/auth0-react', () => ({
+  useAuth0: () => ({
+    isLoading: false,
+    isAuthenticated: false,
+    user: null,
+    loginWithRedirect: jest.fn(),
+    logout: jest.fn(),
+  }),
+  withAuthenticationRequired: (comp) => comp,
+}));
+
+test('renders app root container', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const appElement = document.getElementById('app');
+  expect(appElement).toBeInTheDocument();
 });
