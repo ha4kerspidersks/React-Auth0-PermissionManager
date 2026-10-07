@@ -1,28 +1,31 @@
-// index.js or App.js
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Auth0Provider } from '@auth0/auth0-react';
 import App from './App';
-import configJson from "./auth_config_new.json";
-import "./index.css";
+import configJson from './auth_config_new.json';
+import './index.css';
 
-// const express = require('express');
-// const app = express();
+const domain = import.meta.env.VITE_AUTH0_DOMAIN || configJson.domain;
+const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID || configJson.clientId;
+const audience = import.meta.env.VITE_AUTH0_AUDIENCE || configJson.audience;
+const redirectUri = import.meta.env.VITE_AUTH0_REDIRECT_URI || 'http://localhost:3000/buyer';
 
-ReactDOM.render(
-  <Auth0Provider
-
-    domain={configJson.domain}
-    clientId={configJson.clientId}
-    authorizationParams={{
-      redirect_uri: 'http://localhost:3000/buyer',
-      scope: "openid profile read:spark update:spark",
-      audience: configJson.audience,
-    }}
-  >
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </Auth0Provider>,
-  document.getElementById('root')
-);
+const container = document.getElementById('root');
+if (container) {
+  const root = createRoot(container);
+  root.render(
+    <Auth0Provider
+      domain={domain}
+      clientId={clientId}
+      authorizationParams={{
+        redirect_uri: redirectUri,
+        scope: 'openid profile read:spark update:spark',
+        audience: audience,
+      }}
+    >
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </Auth0Provider>
+  );
+}

@@ -12,7 +12,7 @@ export default function Home() {
 
     // Replace 'http://localhost:3000/buyer' with your Okta post-logout redirect URL.
     const postLogoutRedirectUri = "http://localhost:3000/";
-    
+
     const oktaLogoutUrl = `https://${oktaDomain}/login/signout?fromURI==${postLogoutRedirectUri}`;
 
     // Redirect the user to the Okta logout URL.
@@ -58,8 +58,8 @@ export default function Home() {
   const AllLogout = () => {
     if(user){
 
-      
-      if(user.sub.split('|')[0] == 'okta') {
+
+      if (user.sub && user.sub.split('|')[0] === 'okta') {
         oktaLogout({});
       }
       logoutWithRedirect();
@@ -71,7 +71,7 @@ export default function Home() {
       <div
         className="h-screen w-screen mx-auto flex flex-col px-5 py-24 justify-center items-center"
         style={{
-          backgroundImage: `url(${process.env.PUBLIC_URL}/background.jpg)`,
+          backgroundImage: `url(${import.meta.env.BASE_URL ? import.meta.env.BASE_URL.replace(/\/$/, '') : ''}/background.jpg)`,
         }}
       >
         <div className="bg-white sm:w-1/3 flex flex-col items-center mb-10 p-4 rounded-lg">
@@ -86,7 +86,7 @@ export default function Home() {
             <img
               alt="Spark"
               className="object-cover object-center w-80 h-80"
-              src={process.env.PUBLIC_URL + "/spark.png"}
+              src={(import.meta.env.BASE_URL ? import.meta.env.BASE_URL.replace(/\/$/, '') : '') + "/spark.png"}
             />
           )}
           {!isAuthenticated ? (
