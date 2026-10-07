@@ -1,0 +1,14 @@
+{
+  "name": "permission-manager-server",
+  "version": "0.1.0",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node -e \"const app = require('./server.js'); console.log('Server module loaded successfully'); process.exit(0);\""
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-openid-connect": "^2.17.0"
+  }
+}

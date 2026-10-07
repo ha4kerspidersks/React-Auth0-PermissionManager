@@ -22,11 +22,16 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install client dependencies
         run: npm install --legacy-peer-deps
 
-      - name: Run tests
+      - name: Run client tests
         run: npm test
 
-      - name: Build project
+      - name: Build client project
         run: npm run build
+
+      - name: Validate server package
+        run: |
+          npm --prefix server install
+          npm --prefix server test
