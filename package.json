@@ -58,7 +58,7 @@
     "vitest": "^5.0.3"
   },
   "overrides": {
-    "braces": "^3.0.3",
+    "braces": "npm:@franciscosolis/braces@^3.1.1",
     "micromatch": "^4.0.8",
     "nth-check": "^2.1.1",
     "serialize-javascript": "^7.0.3",
